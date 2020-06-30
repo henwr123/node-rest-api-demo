@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
+
+const dbUri = 'mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@node-demo.gnxdd.mongodb.net/<dbname>?retryWrites=true&w=majority';
 
 const config = {
     autoIndex: false,
@@ -6,4 +9,4 @@ const config = {
     useUnifiedTopology: true
 };
 
-mongoose.connect('mongodb+srv://<user>:<password>@node-demo.gnxdd.mongodb.net/<dbname>?retryWrites=true&w=majority', config);
+mongoose.connect(dbUri, config);
