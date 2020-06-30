@@ -1,0 +1,24 @@
+{
+  "name": "rest-api-demo",
+  "version": "1.0.0",
+  "description": "Demo of a REST API using node and MongoDB - based on https://hackernoon.com/restful-api-design-with-node-js-26ccf66eab09",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henwr123/node-rest-api-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henwr123/node-rest-api-demo/issues"
+  },
+  "homepage": "https://github.com/henwr123/node-rest-api-demo#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.20"
+  }
+}
