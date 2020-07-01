@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Behavior = require('./Behavior');
+const Function = require('../function/Function');
 require('dotenv').config();
 
 const router = express.Router();
@@ -11,14 +12,25 @@ router.use(bodyParser.json());
 
 // CREATES A NEW Behavior
 router.post('/', function (req, res) {
-    Behavior.create({
-        name: req.body.name,
-        description: req.body.description
-    },
-        function (err, behavior) {
-            if (err) return res.status(500).send("There was a problem adding the information to the database.");
-            res.status(200).send(behavior);
-        });
+
+    // Validate the function exists
+    Function.findById(req.body.function_id, function (err, func) {
+
+        if (err) return res.status(500).send("There was a problem finding the function provided.");
+
+        Behavior.create({
+            name: req.body.name,
+            description: req.body.description,
+            function_id: req.body.function_id
+        },
+            function (err, behavior) {
+                if (err) return res.status(500).send("There was a problem adding the information to the database.");
+                res.status(200).send(behavior);
+            });
+
+
+    });
+
 });
 
 // GETS A SINGLE Behavior FROM THE DATABASE
@@ -33,10 +45,26 @@ router.get('/:id', function (req, res) {
 // UPDATES A SINGLE USER IN THE DATABASE
 router.put('/:id', function (req, res) {
 
-    Behavior.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, behavior) {
-        if (err) return res.status(500).send("There was a problem updating the behavior.");
-        res.status(200).send(behavior);
-    });
+    if (req.body.function_id) {
+
+        // Validate the function exists
+        Function.findById(req.body.function_id, function (err, func) {
+
+            if (err) return res.status(500).send("There was a problem finding the function provided.");
+
+            Behavior.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, behavior) {
+                if (err) return res.status(500).send("There was a problem updating the behavior.");
+                res.status(200).send(behavior);
+            });
+        });
+
+    } else {
+
+        Behavior.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, behavior) {
+            if (err) return res.status(500).send("There was a problem updating the behavior.");
+            res.status(200).send(behavior);
+        });
+    }
 });
 
 // DELETES A USER FROM THE DATABASE
