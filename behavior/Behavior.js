@@ -2,29 +2,38 @@ const mongoose = require('mongoose');
 const Function = require('../function/Function');
 
 const BehaviorScheme = new mongoose.Schema({
-    name: { type: String, required: true },
+
+    name: { 
+        type: String, 
+        required: true 
+    },
+
     description: String,
+
     function_id: {
         type: String,
         required: true,
         validate: {
-            isAsync: true,
-            validator: function (v, callback) {
+            validator: function (value) {
 
-                // Validate the function exists
-                Function.findById(v, function (err, func) {
-                    if (err) {
-                        callback(false);
-                    }
-                    else {
-                        callback(true);
-                    }
+                return new Promise(function (resolve, reject) {
+
+                    // Validate the function exists
+                    Function.findById(value, function (err, func) {
+                        if (err) {
+                            resolve(false);
+                        }
+                        else {
+                            resolve(true);
+                        }
+                    });
+
                 });
-            },
-            message: 'The function id provided was not valid'
+            }
         }
     }
 });
+
 mongoose.model('Behavior', BehaviorScheme);
 
 module.exports = mongoose.model('Behavior');

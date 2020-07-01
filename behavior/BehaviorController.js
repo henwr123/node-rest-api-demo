@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Behavior = require('./Behavior');
-const Function = require('../function/Function');
 require('dotenv').config();
 
 const router = express.Router();
@@ -36,10 +35,17 @@ router.get('/:id', function (req, res) {
 // UPDATES A SINGLE USER IN THE DATABASE
 router.put('/:id', function (req, res) {
 
-    Behavior.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, behavior) {
+    var opts = {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    };
+
+    Behavior.findByIdAndUpdate(req.params.id, req.body, opts, function (err, behavior) {
         if (err) return res.status(500).send("There was a problem updating the behavior.");
         res.status(200).send(behavior);
     });
+
 });
 
 // DELETES A USER FROM THE DATABASE
