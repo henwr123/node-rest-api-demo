@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Behavior = require('./Behavior');
-require('dotenv').config();
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.post('/', function (req, res) {
     Behavior.create({
         name: req.body.name,
         description: req.body.description,
-        function_id: req.body.function_id
+        function: req.body.function
     },
         function (err, behavior) {
             if (err) return res.status(500).send("There was a problem adding the information to the database.");
@@ -29,10 +28,10 @@ router.get('/:id', function (req, res) {
         if (err) return res.status(500).send("There was a problem finding the behavior.");
         if (!behavior) return res.status(404).send("No behavior found.");
         res.status(200).send(behavior);
-    });
+    }).populate('function');
 });
 
-// UPDATES A SINGLE USER IN THE DATABASE
+// UPDATES A SINGLE Behavior IN THE DATABASE
 router.put('/:id', function (req, res) {
 
     var opts = {
@@ -48,20 +47,25 @@ router.put('/:id', function (req, res) {
 
 });
 
-// DELETES A USER FROM THE DATABASE
+// DELETES A Behavior FROM THE DATABASE
 router.delete('/:id', function (req, res) {
-    Behavior.findByIdAndRemove(req.params.id, function (err, behavior) {
+
+    var opts = {
+        useFindAndModify: false
+    };
+
+    Behavior.findByIdAndRemove(req.params.id, opts, function (err, behavior) {
         if (err) return res.status(500).send("There was a problem deleting the behavior.");
         res.status(200).send("Behavior " + behavior.name + " was deleted.");
     });
 });
 
-// RETURNS ALL THE USERS IN THE DATABASE
+// RETURNS ALL THE Behavior IN THE DATABASE
 router.get('/', function (req, res) {
     Behavior.find({}, function (err, behaviors) {
         if (err) return res.status(500).send("There was a problem finding the behaviors.");
         res.status(200).send(behaviors);
-    });
+    }).populate('function');
 });
 
 module.exports = router;

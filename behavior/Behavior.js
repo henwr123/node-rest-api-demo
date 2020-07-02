@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Function = require('../function/Function');
+//const Function = require('../function/Function');
 
 const BehaviorScheme = new mongoose.Schema({
 
@@ -11,31 +11,9 @@ const BehaviorScheme = new mongoose.Schema({
 
     description: String,
 
-    // function_id: {
-    //     type: String,
-    //     required: true,
-    //     validate: {
-    //         validator: function (value) {
-
-    //             return new Promise(function (resolve, reject) {
-
-    //                 // Validate the function exists
-    //                 Function.findById(value, function (err, func) {
-    //                     if (err) {
-    //                         resolve(false);
-    //                     }
-    //                     else {
-    //                         resolve(true);
-    //                     }
-    //                 });
-
-    //             });
-    //         }
-    //     }
-    // },
-
-    function_id: {
+    function: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Function'
     }
 
