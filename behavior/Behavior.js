@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-//const Function = require('../function/Function');
 
 const BehaviorScheme = new mongoose.Schema({
 
