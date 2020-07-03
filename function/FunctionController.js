@@ -30,7 +30,7 @@ router.get('/:id', function (req, res) {
     });
 });
 
-// UPDATES A SINGLE USER IN THE DATABASE
+// UPDATES A SINGLE Function IN THE DATABASE
 router.put('/:id', function (req, res) {
 
     Function.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, func) {
@@ -39,7 +39,7 @@ router.put('/:id', function (req, res) {
     });
 });
 
-// DELETES A USER FROM THE DATABASE
+// DELETES A Function FROM THE DATABASE
 router.delete('/:id', function (req, res) {
     Function.findByIdAndRemove(req.params.id, function (err, func) {
         if (err) return res.status(500).send("There was a problem deleting the func.");
@@ -47,7 +47,7 @@ router.delete('/:id', function (req, res) {
     });
 });
 
-// RETURNS ALL THE USERS IN THE DATABASE
+// RETURNS ALL THE Functions IN THE DATABASE
 router.get('/', function (req, res) {
     Function.find({}, function (err, funcs) {
         if (err) return res.status(500).send("There was a problem finding the funcs.");
