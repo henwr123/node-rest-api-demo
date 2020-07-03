@@ -15,6 +15,11 @@ const BehaviorScheme = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Function'
+    },
+
+    dimension: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Dimension'
     }
 
 });

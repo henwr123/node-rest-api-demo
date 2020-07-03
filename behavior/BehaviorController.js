@@ -14,7 +14,8 @@ router.post('/', function (req, res) {
     Behavior.create({
         name: req.body.name,
         description: req.body.description,
-        function: req.body.function
+        function: req.body.function,
+        dimension: req.body.dimension
     },
         function (err, behavior) {
             if (err) return res.status(500).send("There was a problem adding the information to the database.");
@@ -28,7 +29,7 @@ router.get('/:id', function (req, res) {
         if (err) return res.status(500).send("There was a problem finding the behavior.");
         if (!behavior) return res.status(404).send("No behavior found.");
         res.status(200).send(behavior);
-    }).populate('function');
+    }).populate('function').populate('dimension');
 });
 
 // UPDATES A SINGLE Behavior IN THE DATABASE
@@ -65,7 +66,7 @@ router.get('/', function (req, res) {
     Behavior.find({}, function (err, behaviors) {
         if (err) return res.status(500).send("There was a problem finding the behaviors.");
         res.status(200).send(behaviors);
-    }).populate('function');
+    }).populate('function').populate('dimension');
 });
 
 module.exports = router;
