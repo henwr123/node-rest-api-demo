@@ -7,6 +7,7 @@ const BehaviorController = require('./behavior/BehaviorController');
 const DimensionController = require('./dimension/DimensionController');
 const UnitController = require('./unit/UnitController');
 const CampaignController = require('./campaign/CampaignController');
+const DataController = require('./data/DataController');
 require('dotenv').config();
 
 const app = express();
@@ -18,5 +19,6 @@ app.use('/dimensions', DimensionController);
 app.use('/units', UnitController);
 app.use('/clients', ClientController);
 app.use('/campaigns', CampaignController);
+app.use('/data', DataController);
 
 module.exports = app;
