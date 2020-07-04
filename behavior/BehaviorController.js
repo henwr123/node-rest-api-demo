@@ -63,10 +63,15 @@ router.delete('/:id', function (req, res) {
 
 // RETURNS ALL THE Behavior IN THE DATABASE
 router.get('/', function (req, res) {
-    Behavior.find({}, function (err, behaviors) {
+
+    const name = req.query.name;
+    var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
+
+    Behavior.find(condition, function (err, behaviors) {
         if (err) return res.status(500).send("There was a problem finding the behaviors.");
         res.status(200).send(behaviors);
     }).populate('function').populate('dimension');
+
 });
 
 module.exports = router;
