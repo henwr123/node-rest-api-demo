@@ -36,17 +36,13 @@ const DataScheme = new mongoose.Schema({
         ref: 'Unit'
     },
 
-    notes: { 
-        type: String, 
-    },
-
-    timeEntered: {
-        type: Date,
-        required: true,
-        default: new Date()
+    notes: {
+        type: String,
     }
 
-});
+},
+    { timestamps: true }
+);
 
 mongoose.model('Data', DataScheme);
 
